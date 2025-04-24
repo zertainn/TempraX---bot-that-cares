@@ -2,7 +2,7 @@ import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import os
 
-TOKEN = "7574040177:AAECd04LZ-aCDSHTYGf-DAlYKPfTd6fquA4"
+TOKEN = ""
 USER_FILE = "users.txt"
 
 bot = telebot.TeleBot(TOKEN)
@@ -13,19 +13,19 @@ def make_keyboard():
     keyboard.add(KeyboardButton('/help'))
     return keyboard
 
-# Load known users
+
 def load_known_users():
     if not os.path.exists(USER_FILE):
         return set()
     with open(USER_FILE, "r") as f:
         return set(line.strip() for line in f.readlines())
 
-# Save new user
+
 def save_new_user(user_id):
     with open(USER_FILE, "a") as f:
         f.write(f"{user_id}\n")
 
-# /start command handler
+
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     user_id = str(message.from_user.id)
@@ -58,7 +58,7 @@ def send_help(message):
 
     bot.send_message(message.chat.id, help, reply_markup=make_keyboard())
 
-# Start polling
+
 print("Бот работает... 🚀")
 
 bot.infinity_polling()
